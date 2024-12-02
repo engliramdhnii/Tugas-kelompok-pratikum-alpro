@@ -31,3 +31,46 @@ class StudentProductivityToolkit:
 
         tombol_motivasi = tk.Button(root, text="Motivational Quote Generator", command=self.tampilkan_motivasi, width=25)
         tombol_motivasi.pack(pady=10)
+
+        # Mendefinisikan fungsi timer_belajar
+    def buka_timer_belajar(self):
+        # Jendela Timer Belajar
+        jendela_timer = tk.Toplevel(self.root)
+        jendela_timer.title("Timer Belajar")
+        jendela_timer.geometry("300x200")
+
+        # Label waktu
+        label_waktu = tk.Label(jendela_timer, text="00:00", font=("Arial", 24))
+        label_waktu.pack(pady=20)
+
+        # Input durasi
+        label_durasi = tk.Label(jendela_timer, text="Masukkan durasi (menit):")
+        label_durasi.pack()
+        input_durasi = tk.Entry(jendela_timer)
+        input_durasi.pack()
+
+        def mulai_timer():
+            try:
+                # Ambil durasi dari input
+                menit = int(input_durasi.get())
+                detik = menit * 60
+
+                # Hitung mundur
+                def hitung_mundur():
+                    nonlocal detik
+                    if detik > 0:
+                        menit_tampil = detik // 60
+                        detik_tampil = detik % 60
+                        label_waktu.config(text=f"{menit_tampil:02d}:{detik_tampil:02d}")
+                        detik -= 1
+                        jendela_timer.after(1000, hitung_mundur)
+                    else:
+                        messagebox.showinfo("Selesai", "Waktu belajar habis!")
+                hitung_mundur() # Mulai hitung mundur
+
+            except ValueError:
+                messagebox.showerror("Kesalahan", "Masukkan durasi yang valid!")
+
+        # Tombol mulai
+        tombol_mulai = tk.Button(jendela_timer, text="Mulai", command=mulai_timer)
+        tombol_mulai.pack(pady=10)
