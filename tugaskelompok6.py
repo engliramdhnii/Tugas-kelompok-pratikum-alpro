@@ -74,3 +74,24 @@ class StudentProductivityToolkit:
         # Tombol mulai
         tombol_mulai = tk.Button(jendela_timer, text="Mulai", command=mulai_timer)
         tombol_mulai.pack(pady=10)
+
+    # Mendefinisikan fungsi catatan_harian
+    def buka_catatan_harian(self):
+        # Jendela Catatan Harian
+        jendela_catatan = tk.Toplevel(self.root)
+        jendela_catatan.title("Catatan Harian")
+        jendela_catatan.geometry("400x300")
+
+        # Area teks catatan
+        area_catatan = tk.text(jendela_catatan, height = 10)
+        area_catatan.pack(padx = 10, pady = 10, expand = True, fill = tk.BOTH)
+
+        def simpan_catatan():
+            # Simpan catatan ke file
+            with open("catatan_harian.txt", "w") as file:
+                file.write(area_catatan.get("1.0", tk.END))
+            messagebox.showinfo("Berhasil", "Catatan tersimpan!")
+        
+        # Tombol simpan
+        tombol_simpan = tk.Button(jendela_catatan, text = "Simpan", command = simpan_catatan)
+        tombol_simpan.pack(pady=10)
