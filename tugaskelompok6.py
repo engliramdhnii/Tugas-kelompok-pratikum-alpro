@@ -133,3 +133,56 @@ class StudentProductivityToolkit:
         tombol_hapus = tk.Button(jendela_tugas, text="Hapus", command=hapus_list)
         tombol_hapus.pack(side=tk.RIGHT, padx=10, pady=10)
 
+#membuat kalkulator sederhana
+def buka_kalkulator(self):
+        # Jendela Kalkulator
+        jendela_kalkulator = tk.Toplevel(self.root)
+        jendela_kalkulator.title("Kalkulator Sederhana")
+        jendela_kalkulator.geometry("250x350")
+
+        # Layar kalkulator
+        layar = tk.Entry(jendela_kalkulator, width=20, justify='right')
+        layar.grid(row=0, column=0, columnspan=4, padx=5, pady=5)
+
+        # Fungsi tombol
+        def klik_tombol(angka):
+            sekarang = layar.get()
+            layar.delete(0, tk.END)
+            layar.insert(0, sekarang + str(angka))
+
+        def hitung():
+            try:
+                hasil = eval(layar.get())
+                layar.delete(0, tk.END)
+                layar.insert(0, hasil)
+            except:
+                layar.delete(0, tk.END)
+                layar.insert(0, "Error")
+
+        def bersihkan():
+            layar.delete(0, tk.END)
+
+        # Tombol-tombol
+        tombol = [
+            '7', '8', '9', '/',
+            '4', '5', '6', '*',
+            '1', '2', '3', '-',
+            '0', '.', '=', '+'
+        ]
+
+        # Buat tombol
+        baris = 1
+        kolom = 0
+        for tombol_val in tombol:
+            if tombol_val == '=':
+                tk.Button(jendela_kalkulator, text=tombol_val, 
+                          command=hitung).grid(row=baris, column=kolom)
+            else:
+                tk.Button(jendela_kalkulator, text=tombol_val, 
+                          command=lambda x=tombol_val: klik_tombol(x)).grid(row=baris, column=kolom)
+            
+            kolom += 1
+            if kolom > 3:
+                kolom = 0
+                baris += 1
+
