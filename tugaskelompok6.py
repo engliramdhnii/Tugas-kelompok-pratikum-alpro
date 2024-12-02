@@ -95,3 +95,41 @@ class StudentProductivityToolkit:
         # Tombol simpan
         tombol_simpan = tk.Button(jendela_catatan, text = "Simpan", command = simpan_catatan)
         tombol_simpan.pack(pady=10)
+        
+    # Mendefinisikan fungsi todo_list
+    def buka_todo_list(self):
+        # Jendela Daftar Tugas
+        jendela_tugas = tk.Toplevel(self.root)
+        jendela_tugas.title("Daftar Tugas")
+        jendela_tugas.geometry("300x400")
+
+        # Daftar tugas
+        daftar_tugas = tk.Listbox(jendela_tugas)
+        daftar_tugas.pack(padx=10, pady=10, expand=True, fill=tk.BOTH)
+
+        # Input tugas
+        input_tugas = tk.Entry(jendela_tugas)
+        input_tugas.pack(padx=10)
+
+        def tambah_list():
+            # Tambah tugas baru
+            tugas = input_tugas.get()
+            if tugas:
+                daftar_tugas.insert(tk.END, tugas)
+                input_tugas.delete(0, tk.END)
+
+        def hapus_list():
+            # Hapus tugas yang dipilih
+            try:
+                index = daftar_tugas.curselection()[0]
+                daftar_tugas.delete(index)
+            except:
+                messagebox.showwarning("Peringatan", "Pilih tugas yang akan dihapus")
+
+        # Tombol tambah dan hapus
+        tombol_tambah = tk.Button(jendela_tugas, text="Tambah", command=tambah_list)
+        tombol_tambah.pack(side=tk.LEFT, padx=10, pady=10)
+
+        tombol_hapus = tk.Button(jendela_tugas, text="Hapus", command=hapus_list)
+        tombol_hapus.pack(side=tk.RIGHT, padx=10, pady=10)
+
